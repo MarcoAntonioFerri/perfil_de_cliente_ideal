@@ -1,5 +1,5 @@
 from pathlib import Path
-
+"""
 from dotenv import load_dotenv
 from loguru import logger
 
@@ -7,6 +7,7 @@ from loguru import logger
 load_dotenv()
 
 # Paths
+
 PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
 
@@ -30,3 +31,23 @@ try:
     logger.add(lambda msg: tqdm.write(msg, end=""), colorize=True)
 except ModuleNotFoundError:
     pass
+"""
+# caminhos
+ROOT = Path(__file__).resolve().parents[1]  # volta até a raiz do repo
+NAME_RAWDATASET = "marketing_campaign.csv"
+DATA_DIR = ROOT / "data"
+MODEL_DIR = ROOT / "models"
+RAW_DATA_DIR = DATA_DIR / "raw" / NAME_RAWDATASET
+
+#print(ROOT)
+# arquivos (ajuste para o seu caso)
+#PROCESSED_CSV = DATA_DIR / "processed" / "dataset.csv" #necessaário comentar pois não existe o dataset.csv
+#MODEL_PATH = MODEL_DIR / "clf.joblib"
+
+# parâmetros globais
+RANDOM_SEED = 42
+TEST_SIZE = 0.2
+TARGET_COL = "AcceptedCmp1"
+
+# formato dos dados
+CSV_SEPARATOR = "\t"
