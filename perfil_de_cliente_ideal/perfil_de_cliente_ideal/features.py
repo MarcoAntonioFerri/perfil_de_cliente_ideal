@@ -1,7 +1,16 @@
 from pathlib import Path
 from dataset import DataRepository
 
-"""from loguru import logger
+from datetime import date
+from perfil_de_cliente_ideal.config import RAW_DATA_DIR, CSV_SEPARATOR
+import pandas as pd
+
+pd.set_option('display.max_columns', 30)
+pd.set_option('display.max_rows', 10)
+
+"""
+
+from loguru import logger
 from tqdm import tqdm
 import typer
 
@@ -27,5 +36,45 @@ def main(
 
 
 if __name__ == "__main__":
-    app()"""
+    app()
+    
+"""
 
+class FeatureEngineer():
+    def __init__(self):
+        pass
+
+    def remove_missing(self, df : pd.DataFrame, columns : str):
+        df_no_missing = df.dropna(subset=[columns])
+        return df_no_missing
+
+    def make_feature_age(self, df : pd.DataFrame):
+        df["age"] = date.today().year - df["Year_Birth"]
+        return df
+
+    def remove_outliers(self, df : pd.DataFrame, column : str ,threshold : str, value):
+        if threshold == "above":
+            df = df[df[column] <= value]
+            return df
+
+        elif threshold == "below":
+            df = df[df[column] >= value]
+            return df
+
+
+
+datarepository = DataRepository()
+heart = datarepository.load_dataframe(RAW_DATA_DIR, CSV_SEPARATOR)
+heart.drop(columns=["ID"], inplace=True)
+print("Primeiro SHAPE:", heart.shape)
+
+engineer = FeatureEngineer()
+#heart = engineer.remove_missing(heart, columns="Income")
+heart = engineer.make_feature_age(heart)
+#heart = engineer.remove_outliers(heart, column="Income", threshold="above", value=600000)
+#heart = engineer.remove_outliers(heart, column="age", threshold="above", value=100)
+print(heart.info())
+print(heart.isnull().sum())
+print("Segundo SHAPE:", heart.shape)
+
+print(heart[heart["age"] >= 100])

@@ -1,6 +1,6 @@
 
 from pathlib import Path
-from unittest.mock import inplace
+#from unittest.mock import inplace
 
 from perfil_de_cliente_ideal.config import RAW_DATA_DIR, CSV_SEPARATOR
 import pandas as pd
@@ -48,8 +48,6 @@ class DataRepository:
         dataframe.to_csv(path_name, index=index)
         return
 
-datarepository = DataRepository()
-heart = datarepository.load_dataframe(RAW_DATA_DIR, CSV_SEPARATOR)
-heart.drop(columns=["ID"], inplace=True)
-print(heart.head(10))
-datarepository.save_dataframe(heart,name="novo_df.csv", path="../data/processed/")
+
+
+#datarepository.save_dataframe(heart,name="novo_df.csv", path="../data/processed/")
