@@ -1,12 +1,9 @@
 from pathlib import Path
-from dataset import DataRepository
+from perfil_de_cliente_ideal.dataset import DataRepository
 
 from datetime import date
 from perfil_de_cliente_ideal.config import RAW_DATA_DIR, CSV_SEPARATOR
 import pandas as pd
-
-pd.set_option('display.max_columns', 30)
-pd.set_option('display.max_rows', 10)
 
 """
 
@@ -46,6 +43,7 @@ class FeatureEngineer():
 
     def remove_missing(self, df : pd.DataFrame, columns : str):
         df_no_missing = df.dropna(subset=[columns])
+        df_no_missing.reset_index(drop=True, inplace=True)
         return df_no_missing
 
     def make_feature_age(self, df : pd.DataFrame):
@@ -55,15 +53,34 @@ class FeatureEngineer():
     def remove_outliers(self, df : pd.DataFrame, column : str ,threshold : str, value):
         if threshold == "above":
             df = df[df[column] <= value]
+            df.reset_index(drop=True, inplace=True)
             return df
 
         elif threshold == "below":
             df = df[df[column] >= value]
+            df.reset_index(drop=True, inplace=True)
             return df
 
+    def ordinal_education(self, df : pd.DataFrame):
+        replace_education = {
+            'Basic': 0,
+            'Graduation': 1,
+            '2n Cycle': 2,
+            'Master': 3,
+            'PhD': 4
+        }
+        df['Education'] = df['Education'].replace(replace_education)
+        return df
 
+    def do_one_hot_enconding(self, df : pd.DataFrame):
+        df = pd.get_dummies(df, drop_first=True)
+        return df
 
-datarepository = DataRepository()
+    def select_features(self, df : pd.DataFrame, list_features : list):
+        df = df[[list_features]]
+        return df
+
+"""datarepository = DataRepository()
 heart = datarepository.load_dataframe(RAW_DATA_DIR, CSV_SEPARATOR)
 heart.drop(columns=["ID"], inplace=True)
 print("Primeiro SHAPE:", heart.shape)
@@ -77,4 +94,4 @@ print(heart.info())
 print(heart.isnull().sum())
 print("Segundo SHAPE:", heart.shape)
 
-print(heart[heart["age"] >= 100])
+print(heart[heart["age"] >= 100])"""

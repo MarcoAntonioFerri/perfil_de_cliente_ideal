@@ -48,6 +48,8 @@ RAW_DATA_DIR = DATA_DIR / "raw" / NAME_RAWDATASET
 RANDOM_SEED = 42
 TEST_SIZE = 0.2
 TARGET_COL = "AcceptedCmp1"
+WEIGHT = {0: 1, 1 : 8}
+MAX_ITER = 600
 
 # formato dos dados
 CSV_SEPARATOR = "\t"
