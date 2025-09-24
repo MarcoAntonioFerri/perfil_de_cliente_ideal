@@ -1,50 +1,25 @@
 from pathlib import Path
-"""
-from dotenv import load_dotenv
-from loguru import logger
 
-# Load environment variables from .env file if it exists
-load_dotenv()
-
-# Paths
-
-PROJ_ROOT = Path(__file__).resolve().parents[1]
-logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
-
-DATA_DIR = PROJ_ROOT / "data"
-RAW_DATA_DIR = DATA_DIR / "raw"
-INTERIM_DATA_DIR = DATA_DIR / "interim"
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
-EXTERNAL_DATA_DIR = DATA_DIR / "external"
-
-MODELS_DIR = PROJ_ROOT / "models"
-
-REPORTS_DIR = PROJ_ROOT / "reports"
-FIGURES_DIR = REPORTS_DIR / "figures"
-
-# If tqdm is installed, configure loguru with tqdm.write
-# https://github.com/Delgan/loguru/issues/135
-try:
-    from tqdm import tqdm
-
-    logger.remove(0)
-    logger.add(lambda msg: tqdm.write(msg, end=""), colorize=True)
-except ModuleNotFoundError:
-    pass
-"""
-# caminhos
+# Define o pasta "raiz"
 ROOT = Path(__file__).resolve().parents[1]  # volta até a raiz do repo
+
+#Caminho para os dados
 NAME_RAWDATASET = "marketing_campaign.csv"
+NAME_PROCESSEDDATASET = "clean_dataset.csv"
 DATA_DIR = ROOT / "data"
-MODEL_DIR = ROOT / "models"
 RAW_DATA_DIR = DATA_DIR / "raw" / NAME_RAWDATASET
+PROCESSED_DATA_DIR = DATA_DIR / "processed"
+PROCESSED_DATA_DIR_NAME = DATA_DIR / "processed" / NAME_PROCESSEDDATASET
 
-#print(ROOT)
-# arquivos (ajuste para o seu caso)
-#PROCESSED_CSV = DATA_DIR / "processed" / "dataset.csv" #necessaário comentar pois não existe o dataset.csv
-#MODEL_PATH = MODEL_DIR / "clf.joblib"
+#Caminho para os modelos
+NAME_MODEL = "linear_regression.joblib"
+MODEL_DIR = ROOT / "models"
+MODEL_DIR_NAME = ROOT / "models" / NAME_MODEL
 
-# parâmetros globais
+#Caminho para o reports
+REPORTS_DIR = ROOT / "reports"
+
+# parâmetros globais para o modelo
 RANDOM_SEED = 42
 TEST_SIZE = 0.2
 TARGET_COL = "AcceptedCmp1"

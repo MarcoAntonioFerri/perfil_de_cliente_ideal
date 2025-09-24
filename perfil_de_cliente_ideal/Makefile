@@ -11,16 +11,17 @@ PYTHON_INTERPRETER = python
 #################################################################################
 
 
-## Install Python dependencies
-.PHONY: requirements
+## Instala as dependências Python
+.PHONY: requirements requirements_dev
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	
+
+requirements_dev: requirements
+	$(PYTHON_INTERPRETER) -m pip install -r requirements_dev.txt
 
 
-
-## Delete all compiled Python files
+## Deleta os arquivos compilados do Python
 .PHONY: clean
 clean:
 	find . -type f -name "*.py[co]" -delete
@@ -38,9 +39,6 @@ lint:
 format:
 	ruff check --fix
 	ruff format
-
-
-
 
 
 ## Set up Python interpreter environment
