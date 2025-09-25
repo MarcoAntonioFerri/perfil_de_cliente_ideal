@@ -4,7 +4,7 @@
 
 PROJECT_NAME = perfil_de_cliente_ideal
 PYTHON_VERSION = 3.10
-PYTHON_INTERPRETER = python
+PYTHON_INTERPRETER = py
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -12,11 +12,13 @@ PYTHON_INTERPRETER = python
 
 
 ## Instala as dependências Python
-.PHONY: requirements requirements_dev
+.PHONY: requirements
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
+## Instala as dependencias Python, inclusives as de dev
+.PHONY: requirements_dev
 requirements_dev: requirements
 	$(PYTHON_INTERPRETER) -m pip install -r requirements_dev.txt
 
@@ -40,25 +42,30 @@ format:
 	ruff check --fix
 	ruff format
 
-
-## Set up Python interpreter environment
+## Cria ambiente virtual com venv
 .PHONY: create_environment
 create_environment:
-	@bash -c "if [ ! -z `which virtualenvwrapper.sh` ]; then source `which virtualenvwrapper.sh`; mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); else mkvirtualenv.bat $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); fi"
-	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
-	
-
-
+	$(PYTHON_INTERPRETER) -m venv .venv
+	@echo ">>> Ambiente virtual criado em .venv"
+	@echo ">>> Ative com:"
+	@echo "    - Windows: .venv\\Scripts\\activate"
+	@echo "    - Linux/Mac: source .venv/bin/activate"
 
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
 
 
-## Make dataset
-.PHONY: data
-data: requirements
-	$(PYTHON_INTERPRETER) perfil_de_cliente_ideal/dataset.py
+## Treino do modelo
+.PHONY: train
+train:
+	$(PYTHON_INTERPRETER) run.py cmd_train
+
+## Predição com entrada obrigatória e saída opcional
+.PHONY: predict
+predict:
+	@$(if $(strip $(INPUT)),,$(error ERRO: informe o arquivo de entrada com INPUT=<caminho>))
+	$(PYTHON_INTERPRETER) run.py cmd_predict -pti $(INPUT) $(if $(strip $(OUTPUT)),-o $(OUTPUT),)
 
 
 #################################################################################
