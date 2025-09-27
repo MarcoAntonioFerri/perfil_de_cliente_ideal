@@ -35,10 +35,15 @@ Este trabalho foi desenvolvido como parte do meu portfólio em Data Science, apl
 │       └── marketing_campaign.csv
 │
 ├── notebooks/           # Jupyter Notebooks com exploração e protótipo
+│   ├── projeto_perfil_cliente_ideal.ipynb # Prototipação do projeto no notebook
+│   └── funil_de_marketing.webpp # Imagem que apoia argumentação no notebook
+│
 ├── perfil_de_cliente_ideal/
 │   ├── dataset.py       # Carregamento e salvamento de dados
 │   ├── features.py      # Tratamento e engenharia de features
 │   ├── config.py        # Configurações globais do projeto
+│   ├── pipeline.py      # Roda todo o pipeline através da função cmd_traind e cmd_predict
+│   ├── cmd.py           # Configura os comandos CLI's (Interface de Linha de Comando)
 │   └── modeling/ 
 │       └── model.py     # Script de treino e predição
 │        
@@ -102,4 +107,4 @@ Para mais detalhes, consulte o arquivo [LICENSE](LICENSE).
 
 - 👤 Autor: **Marco Antônio Ferri**
 - 📧 Email: [marco.ferri.profissional@gmail.com](mailto:seuemail@email.com)
-- 🔗 LinkedIn: [link_do_linkedin](https://www.linkedin.com/in/link_do_linkedin)
+- 🔗 LinkedIn: [https://www.linkedin.com/in/marco-antonio-ferri/](https://www.linkedin.com/in/marco-antonio-ferri/)
