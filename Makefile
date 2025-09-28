@@ -20,7 +20,7 @@ requirements:
 ## Instala as dependencias Python, inclusives as de dev
 .PHONY: requirements_dev
 requirements_dev: requirements
-	$(PYTHON_INTERPRETER) -m pip install -r requirements_dev.txt
+	$(PYTHON_INTERPRETER) -m pip install -r requirements-dev.txt
 
 
 ## Deleta os arquivos compilados do Python
